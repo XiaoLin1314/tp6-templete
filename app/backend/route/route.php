@@ -12,12 +12,15 @@ Route::group('site', function () {
  */
 Route::group('backendMember', function () {
     Route::get(':id', 'backendMember/index');
+    //  获取后台角色信息
     Route::get('get-role', 'backendMember/getrole');
+    //  清除缓存
+    Route::get('clear-cache', 'backendMember/getrole');
 })->middleware('checkLogin');
 
 /**
  * 会员管理
-*/
+ */
 Route::group('member', function () {
     Route::get('index', 'Member/index');
     Route::post('create', 'Member/create');

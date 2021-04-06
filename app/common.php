@@ -183,7 +183,9 @@ function signToken($uid, $type = 'api', $key = '!@#$%*&')
     return $resToken;
 }
 
-//验证token
+/**
+ * 验证token
+ */
 function checkToken($token, $key = '!@#$%*&')
 {
     $status = array("code" => -1);
@@ -208,4 +210,26 @@ function checkToken($token, $key = '!@#$%*&')
         $status['msg'] = "未知错误";
         return $status;
     }
+}
+
+/**
+ * 获取树结构
+ * $arr 必须为数组
+ * $pid 父id（上级id），默认为0
+ */
+function getTree($arr, $pid = 0)
+{
+    // 检验必须为数组
+    if (!is_array($arr)) {
+        return false;
+    }
+    $tree = [];
+    foreach ($arr as $k => $v) {
+        if ($v['pid'] == $pid) {
+            $tree[$k] = $v;
+            $tree[$k]['child'] = getTree($arr, $v['id']);
+        }
+        unset($arr[$k]);
+    }
+    return $tree;
 }
