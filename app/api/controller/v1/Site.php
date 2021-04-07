@@ -1,7 +1,7 @@
 <?php
 declare (strict_types=1);
 
-namespace app\api\controller;
+namespace app\api\controller\v1;
 
 use app\api\validate\LoginValidate;
 use app\common\model\UserToken;
@@ -34,16 +34,16 @@ class Site
             // 查询token，检测是否有效
             $userToken = UserToken::fetchToken($memberInfo->id);
             if (empty($userToken)) {
-                $userToken = signToken($memberInfo->id,'api');
+                $userToken = signToken($memberInfo->id, 'api');
                 $tokenModel = new UserToken();
                 if (!$tokenModel->createToken($memberInfo->id, $userToken)) {
                     return errMsg(500, '系统错误，请联系管理员！');
                 }
-            }else{
+            } else {
                 $resToken = checkToken($userToken);
-                if ($resToken['code'] == -1){
+                if ($resToken['code'] == -1) {
                     $tokenModel = new UserToken();
-                    $userToken = signToken($memberInfo->id,'api');
+                    $userToken = signToken($memberInfo->id, 'api');
                     if (!$tokenModel->createToken($memberInfo->id, $userToken)) {
                         return errMsg(500, '系统错误，请联系管理员！');
                     }

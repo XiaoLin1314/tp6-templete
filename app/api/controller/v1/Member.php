@@ -1,7 +1,7 @@
 <?php
 declare (strict_types=1);
 
-namespace app\api\controller;
+namespace app\api\controller\v1;
 
 use app\Common\model\Member as MemberModel;
 

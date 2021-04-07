@@ -1,7 +1,7 @@
 <?php
 declare (strict_types = 1);
 
-namespace app\backend\controller;
+namespace app\backend\controller\v2;
 
 use think\Request;
 

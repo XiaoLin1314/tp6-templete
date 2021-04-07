@@ -1,7 +1,7 @@
 <?php
 declare (strict_types=1);
 
-namespace app\backend\controller;
+namespace app\api\controller\v2;
 
 use think\App;
 use think\exception\ValidateException;
@@ -18,9 +18,6 @@ abstract class BaseController
      */
     protected $request;
 
-    /**
-     * user_id  登录用户id
-     */
     protected $user_id;
 
     /**
@@ -35,11 +32,6 @@ abstract class BaseController
      */
     protected $batchValidate = false;
 
-    /**
-     * 控制器中间件
-     * @var array
-     */
-    protected $middleware = [];
 
     /**
      * 构造方法

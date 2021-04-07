@@ -1,7 +1,7 @@
 <?php
 declare (strict_types=1);
 
-namespace app\backend\controller;
+namespace app\backend\controller\v1;
 
 use app\Common\model\Member as MemberModel;
 use think\Request;

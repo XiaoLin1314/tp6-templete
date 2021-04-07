@@ -1,7 +1,7 @@
 <?php
 declare (strict_types=1);
 
-namespace app\backend\controller;
+namespace app\backend\controller\v1;
 
 use app\common\model\BackendPermission;
 use app\common\model\BackendMember as BackendMemerModel;
@@ -57,7 +57,8 @@ class BackendMember extends BaseController
     /***
      * 清除缓存
      */
-    public function clearCache(){
+    public function clearCache()
+    {
         Cache::clear();
     }
 }

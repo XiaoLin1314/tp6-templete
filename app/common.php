@@ -98,7 +98,7 @@ function sucessMsg($status = 200, $msg = '获取成功！', $data = [])
         'code' => $status,
         'msg' => $msg,
         'data' => $data
-    ]);
+    ], 200);
 }
 
 /**
@@ -113,7 +113,7 @@ function errMsg($status = 500, $msg = '获取失败！', $data = [])
         'code' => $status,
         'msg' => $msg,
         'data' => $data
-    ]);
+    ], 200);
 }
 
 /**

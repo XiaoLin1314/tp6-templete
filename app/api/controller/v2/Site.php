@@ -1,12 +1,12 @@
 <?php
 declare (strict_types=1);
 
-namespace app\backend\controller;
+namespace app\api\controller\v2;
 
 use app\api\validate\LoginValidate;
 use app\common\model\UserToken;
 use think\exception\ValidateException;
-use app\Common\model\BackendMember as BackendMember;
+use app\Common\model\Member as MemberModel;
 
 class Site
 {
@@ -21,7 +21,7 @@ class Site
         try {
             //  验证参数
             validate(LoginValidate::class)->scene('login')->check($postData);
-            $user = new BackendMember();
+            $user = new MemberModel();
             // 检测用户是否存在
             $memberInfo = $user->fetchInfoByWhere(['account' => $postData['account']], 'id,account,salt,password_hash');
             if (empty($memberInfo)) {
@@ -32,19 +32,19 @@ class Site
                 return errMsg(422, '密码错误！');
             }
             // 查询token，检测是否有效
-            $userToken = UserToken::fetchToken($memberInfo->id, 'backend');
+            $userToken = UserToken::fetchToken($memberInfo->id);
             if (empty($userToken)) {
-                $userToken = signToken($memberInfo->id, 'backend');
+                $userToken = signToken($memberInfo->id, 'api');
                 $tokenModel = new UserToken();
-                if (!$tokenModel->createToken($memberInfo->id, $userToken, 'backend')) {
+                if (!$tokenModel->createToken($memberInfo->id, $userToken)) {
                     return errMsg(500, '系统错误，请联系管理员！');
                 }
             } else {
                 $resToken = checkToken($userToken);
                 if ($resToken['code'] == -1) {
                     $tokenModel = new UserToken();
-                    $userToken = signToken($memberInfo->id, 'backend');
-                    if (!$tokenModel->createToken($memberInfo->id, $userToken, 'backend')) {
+                    $userToken = signToken($memberInfo->id, 'api');
+                    if (!$tokenModel->createToken($memberInfo->id, $userToken)) {
                         return errMsg(500, '系统错误，请联系管理员！');
                     }
                 }
@@ -72,7 +72,7 @@ class Site
         try {
             //  验证参数
             validate(LoginValidate::class)->scene('register')->check($postData);
-            $user = new BackendMember();
+            $user = new MemberModel();
             $memberInfo = $user->fetchInfoByWhere(['account' => $postData['account']], 'id,account');
             if (!empty($memberInfo)) {
                 return errMsg(422, '账号已存在！');
